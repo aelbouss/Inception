@@ -1,32 +1,29 @@
 #!/bin/bash
+set -e
 
-# the target folder for the certificate
+# Target folder for the certificate
 CERT_DIR="/etc/nginx/certs"
 
-# certificate file
+# Certificate filenames
 CERT_FILE="cert.pem"
+# private key file name
 
-#private key file
 P_KEY="nginx.key"
 
-
-# create the  certificate  folder
+# Create the certificate folder if it doesn't exist
 mkdir -p "$CERT_DIR"
 
-# check if  the  certif  exits if not  ceate it
-if [ ! -f "$CERT_DIR/$CERT_FILE" ]; then
-    echo "generate self-signed TLS certificate for nginx ..."
-    openssl  req -x509 -nodes -days 365 -newkey rsa:2048 \
-    -keyout "$CERT_DIR/$P_KEY" -out "$CERT_DIR/$CERT_FILE" \
-    -subj "/CN=aelbouss.42.fr"
+# Check if the certificate or key is missing, then generate them
+if [ ! -f "$CERT_DIR/$CERT_FILE" ] || [ ! -f "$CERT_DIR/$P_KEY" ]; then
+    echo "Generating self-signed TLS certificate for Nginx..."
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+        -keyout "$CERT_DIR/$P_KEY" \
+        -out "$CERT_DIR/$CERT_FILE" \
+        -subj "/CN=aelbouss.42.fr"
 fi
 
+# Execute the CMD passed to the container
 exec "$@"
-
-
-
-
-
 
 
 
