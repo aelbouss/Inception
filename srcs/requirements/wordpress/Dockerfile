@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # change the config file  of the php-fpm  pool 
 
-COPY conf/pool.conf /etc/php/8.2/fpm/pool.d/pool.conf
+COPY conf/pool.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 # wordpres setup
 
