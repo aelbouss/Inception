@@ -19,37 +19,48 @@ WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
 
 # Create PHP runtime
 WEB_ROOT="/var/www/html"
-mkdir -p /run/php
-chown www-data:www-data /run/php
+mkdir -p /run/php /tmp/.wp-cli-cache
+chown -R www-data:www-data /run/php /tmp/.wp-cli-cache "${WEB_ROOT}"
+
+wp-cli() {
+    WP_CLI_CACHE_DIR=/tmp/.wp-cli-cache su -s /bin/sh www-data -c "/usr/local/bin/wp --path='${WEB_ROOT}' $*"
+}
+
+# Wait until MariaDB daemon is reachable over the network without failing on unauthenticated pings
+echo "Waiting for MariaDB..."
+until mysqladmin ping -h"${MYSQL_HOST}" --silent; do
+    sleep 2
+done
+echo "MariaDB is up!"
 
 # Initialization guard
 if [ ! -f "$WEB_ROOT/wp-config.php" ]; then
-    # Automatically generate a config using environment variables
-    wp config create \
+    chown -R www-data:www-data "${WEB_ROOT}"
+
+    if [ ! -f "$WEB_ROOT/index.php" ]; then
+        wp-cli core download
+    fi
+
+    wp-cli config create \
         --dbname="${DB_NAME}" \
         --dbuser="${DB_USER}" \
         --dbpass="${MYSQL_PASSWORD}" \
-        --dbhost="${MYSQL_HOST}" \
-        --path="${WEB_ROOT}"
+        --dbhost="${MYSQL_HOST}"
 
-    # Install the WordPress core
-    wp core install \
+    wp-cli core install \
         --url="${WP_URL}" \
         --title="${WP_TITLE}" \
         --admin_user="${WP_ADMIN_USER}" \
         --admin_password="${WP_ADMIN_PASSWORD}" \
-        --admin_email="${WP_ADMIN_EMAIL}" \
-        --path="${WEB_ROOT}"
+        --admin_email="${WP_ADMIN_EMAIL}"
 
-    # Create a secondary user
-    wp user create \
+    wp-cli user create \
         "${WP_USER}" \
         "${WP_USER_EMAIL}" \
         --role=author \
-        --user_pass="${WP_USER_PASSWORD}" \
-        --path="${WEB_ROOT}"
+        --user_pass="${WP_USER_PASSWORD}"
 
     chown -R www-data:www-data "${WEB_ROOT}"
 fi
 
-exec php-FPM -F
+exec php-fpm -F

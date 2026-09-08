@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     php-cli \
     php-mysql \
     php-curl \
+    mariadb-client \
     php-gd \
     php-mbstring \
     php-xml \
@@ -31,10 +32,9 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 COPY  tools/wp_init.sh /usr/bin/wp_init.sh
 
-RUN chmod +x wp_init.sh
+RUN chmod +x /usr/bin/wp_init.sh
 
 EXPOSE  9000
 
-ENTRYPOINT["wp_init.sh"]
-
+ENTRYPOINT ["/usr/bin/wp_init.sh"]
 

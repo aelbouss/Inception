@@ -1,11 +1,8 @@
 #!/bin/bash
 set -e
 
-# Environment variables 
 DB_NAME="${DB_NAME}"
-DB_USER_NAME="${DB_USER_NAME}"
-
-# Extract secrets
+DB_USER_NAME="${DB_USER}"
 
 DB_PASSWORD=$(cat /run/secrets/db_password)
 DB_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
@@ -13,23 +10,19 @@ DB_USER_PASSWORD=$(cat /run/secrets/db_user_password)
 
 DIR="/var/lib/mysql"
 
-# 1. Create runtime and data directories
 mkdir -p "$DIR" /run/mysqld
-
-# 2. Set ownership and permissions
 chown -R mysql:mysql "$DIR" /run/mysqld
 chmod 750 "$DIR"
 
-# 3. First-boot initialization check
 if [ ! -d "$DIR/mysql" ]; then
     echo "Initializing MariaDB system tables..."
     mariadb-install-db --user=mysql --datadir="$DIR" > /dev/null
 
     echo "Starting temporary MariaDB daemon..."
     mariadbd --user=mysql --datadir="$DIR" --skip-networking &
+    DB_PID=$!
 
-    # Wait for socket to become available
-    until mariadmin --socket=/run/mysqld/mysqld.sock ping &>/dev/null; do
+    until mariadb-admin --socket=/run/mysqld/mysqld.sock ping &>/dev/null; do
         sleep 1
     done
 
@@ -43,11 +36,11 @@ if [ ! -d "$DIR/mysql" ]; then
 EOF
 
     echo "Shutting down temporary daemon..."
-    mysqladmin --socket=/run/mysqld/mysqld.sock -u root -p"${DB_ROOT_PASSWORD}" shutdown
+    mysqladmin --socket=/run/mysqld/mysqld.sock shutdown
+    wait "$DB_PID"
 
     echo "Initialization complete."
 fi
 
-# 4. Start MariaDB in the foreground as PID 1
 echo "Starting MariaDB in foreground..."
-exec mariadbd --user=mysql --datadir="$DIR"
+exec mariadbd --user=mysql --datadir="$DIR" --bind-address=0.0.0.0
