@@ -33,6 +33,7 @@ until mariadb \
     --host="${MYSQL_HOST}" \
     --user="${DB_USER}" \
     --password="${MYSQL_PASSWORD}" \
+    --password="${MYSQL_PASSWORD}" \
     --database="${DB_NAME}" \
     --execute="SELECT 1" \
     >/dev/null 2>&1; do
