@@ -31,7 +31,6 @@ services:
       - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
     secrets:
       - db_password
-      - db_user_password
       - wp_admin_password
       - wp_user_password
     restart: always
