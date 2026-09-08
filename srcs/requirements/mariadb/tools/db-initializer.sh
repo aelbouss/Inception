@@ -28,7 +28,8 @@ if [ ! -d "$DIR/mysql" ]; then
 
     echo "Configuring database and users..."
     mariadb --socket=/run/mysqld/mysqld.sock <<-EOF
-        ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';
+        CREATE USER IF NOT EXISTS 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('${DB_ROOT_PASSWORD}');
+        SET PASSWORD FOR 'root'@'localhost' = PASSWORD('${DB_ROOT_PASSWORD}');
         CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
         CREATE USER IF NOT EXISTS '${DB_USER_NAME}'@'%' IDENTIFIED BY '${DB_USER_PASSWORD}';
         GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER_NAME}'@'%';

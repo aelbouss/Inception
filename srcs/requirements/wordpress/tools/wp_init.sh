@@ -13,7 +13,7 @@ WP_USER_EMAIL="${WP_USER_EMAIL}"
 WP_ADMIN_EMAIL="${WP_ADMIN_EMAIL}"
 
 # Extract secrets
-MYSQL_PASSWORD=$(cat /run/secrets/db_password)
+MYSQL_PASSWORD=$(cat /run/secrets/db_user_password)
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
 
@@ -26,12 +26,13 @@ wp-cli() {
     WP_CLI_CACHE_DIR=/tmp/.wp-cli-cache su -s /bin/sh www-data -c "/usr/local/bin/wp --path='${WEB_ROOT}' $*"
 }
 
-# Wait until MariaDB daemon is reachable over the network without failing on unauthenticated pings
+# Wait until MariaDB is completely ready and reachable with credentials
 echo "Waiting for MariaDB..."
-until mysqladmin ping -h"${MYSQL_HOST}" --silent; do
+until mariadb-admin ping -h"${MYSQL_HOST}" -u"${DB_USER}" -p"${MYSQL_PASSWORD}" --silent; do
     sleep 2
 done
 echo "MariaDB is up!"
+
 
 # Initialization guard
 if [ ! -f "$WEB_ROOT/wp-config.php" ]; then
