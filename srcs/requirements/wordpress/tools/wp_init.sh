@@ -26,9 +26,16 @@ wp-cli() {
     WP_CLI_CACHE_DIR=/tmp/.wp-cli-cache su -s /bin/sh www-data -c "/usr/local/bin/wp --path='${WEB_ROOT}' $*"
 }
 
-# Wait until MariaDB daemon is reachable over the network without failing on unauthenticated pings
+# Wait until the database accepts the credentials WordPress will use.
 echo "Waiting for MariaDB..."
-until mysqladmin ping -h"${MYSQL_HOST}" --silent; do
+until mariadb \
+    --protocol=TCP \
+    --host="${MYSQL_HOST}" \
+    --user="${DB_USER}" \
+    --password="${MYSQL_PASSWORD}" \
+    --database="${DB_NAME}" \
+    --execute="SELECT 1" \
+    >/dev/null 2>&1; do
     sleep 2
 done
 echo "MariaDB is up!"

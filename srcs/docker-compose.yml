@@ -54,7 +54,6 @@ services:
       - MYSQL_HOST=${MYSQL_HOST}
     secrets:
       - db_password
-      - db_user_password
       - db_root_password
     volumes:
       - mariadb_data:/var/lib/mysql
@@ -92,8 +91,6 @@ secrets:
     file: ../secrets/db_root_password.txt
   db_password:
     file: ../secrets/db_password.txt
-  db_user_password:
-    file: ../secrets/db_user_password.txt
   wp_user_password:
     file: ../secrets/wp_user_password.txt
   wp_admin_password:

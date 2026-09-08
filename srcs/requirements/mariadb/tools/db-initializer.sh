@@ -6,7 +6,6 @@ DB_USER_NAME="${DB_USER}"
 
 DB_PASSWORD=$(cat /run/secrets/db_password)
 DB_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
-DB_USER_PASSWORD=$(cat /run/secrets/db_user_password)
 
 DIR="/var/lib/mysql"
 
@@ -30,7 +29,7 @@ if [ ! -d "$DIR/mysql" ]; then
     mariadb --socket=/run/mysqld/mysqld.sock <<-EOF
         ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';
         CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
-        CREATE USER IF NOT EXISTS '${DB_USER_NAME}'@'%' IDENTIFIED BY '${DB_USER_PASSWORD}';
+        CREATE USER IF NOT EXISTS '${DB_USER_NAME}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
         GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER_NAME}'@'%';
         FLUSH PRIVILEGES;
 EOF
