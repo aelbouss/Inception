@@ -1,17 +1,6 @@
 #!/bin/bash
 set -e
 
-# Environment variables
-DB_NAME="${DB_NAME}"
-DB_USER="${DB_USER}"
-MYSQL_HOST="${MYSQL_HOST}"
-WP_USER="${WP_USER}"
-WP_ADMIN_USER="${WP_ADMIN_USER}"
-WP_TITLE="${WP_TITLE}"
-WP_URL="${WP_URL}"
-WP_USER_EMAIL="${WP_USER_EMAIL}"
-WP_ADMIN_EMAIL="${WP_ADMIN_EMAIL}"
-
 # Extract secrets
 MYSQL_PASSWORD=$(cat /run/secrets/db_password | tr -d '\r\n')
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password | tr -d '\r\n')
