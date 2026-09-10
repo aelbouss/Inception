@@ -74,7 +74,6 @@ services:
     environment:
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
-      - MYSQL_HOST=${MYSQL_HOST}
     secrets:
       - db_password
       - db_root_password

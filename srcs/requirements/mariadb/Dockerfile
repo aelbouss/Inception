@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y mariadb-server \
 
 VOLUME ["/var/lib/mysql"]
 
-COPY ./conf/50-server.conf /etc/mysql/mariadb.conf.d/50-server.conf
+COPY ./conf/50-server.conf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 COPY ./tools/db-initializer.sh /usr/local/bin/db-initializer.sh
 

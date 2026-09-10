@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     php-mbstring \
     php-xml \
     php-zip \
+    php-redis \
     ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
