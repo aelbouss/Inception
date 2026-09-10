@@ -26,14 +26,13 @@ if [ ! -d "$DIR/$DB_NAME" ]; then
     done
 
     echo "Configuring database and users..."
-    mariadb --host=localhost --socket=/run/mysqld/mysqld.sock <<EOF
+mariadb --socket=/run/mysqld/mysqld.sock <<EOF
 CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
 CREATE USER IF NOT EXISTS '${DB_USER_NAME}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
 GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER_NAME}'@'%';
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';
 FLUSH PRIVILEGES;
 EOF
-
     echo "The users are created and the database initialized..."
 
     echo "Shutting down temporary daemon..."

@@ -2,7 +2,18 @@ version: '3.8'
 
 services:
 
-
+  
+  adminer:
+    image : adminer
+    container_name : adminer
+    build : requirements/bonus/adminer/
+    restart : always
+    networks :
+      - inception
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
   redis:
     image : redis
     container_name : redis

@@ -9,7 +9,7 @@ up:
 	docker compose -f srcs/docker-compose.yml up -d --build
 
 down:
-	docker compose -f srcs/docker-compose.yml down -v
+	docker compose -f srcs/docker-compose.yml down
 
 build:
 	docker compose -f srcs/docker-compose.yml build
