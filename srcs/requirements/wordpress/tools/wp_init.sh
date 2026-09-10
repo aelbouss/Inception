@@ -67,6 +67,14 @@ if [ ! -f "$WEB_ROOT/wp-config.php" ]; then
         "${WP_USER_EMAIL}" \
         --role=author \
         --user_pass="${WP_USER_PASSWORD}"
+    
+    # configure  worpress  to use redis cache
+    wp-cli config set WP_REDIS_HOST "redis"
+    wp-cli config set WP_REDIS_PORT "6379"
+    wp-cli plugin install redis-cache --activate
+    wp-cli redis enable
+    echo "redis cache  enabled successfully"
+
 
     chown -R www-data:www-data "${WEB_ROOT}"
 fi

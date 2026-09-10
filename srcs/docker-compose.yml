@@ -1,6 +1,15 @@
 version: '3.8'
 
 services:
+
+
+  redis:
+    image : redis
+    container_name : redis
+    build : requirements/bonus/redis/
+    restart : always
+    networks :
+      - inception
   nginx:
     image: nginx
     container_name: nginx
@@ -38,6 +47,7 @@ services:
     restart: always
     depends_on:
       - mariadb
+      - redis
     volumes:
       - wordpress_data:/var/www/html
     networks:
