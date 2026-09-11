@@ -30,20 +30,25 @@ done
 echo "MariaDB is up!"
 
 
-# Initialization guard
+# Download WordPress core if missing
+if [ ! -f "$WEB_ROOT/index.php" ]; then
+    echo "Downloading WordPress..."
+    wp-cli core download
+fi
+
+# Create wp-config.php if missing
 if [ ! -f "$WEB_ROOT/wp-config.php" ]; then
-    chown -R www-data:www-data "${WEB_ROOT}"
-
-    if [ ! -f "$WEB_ROOT/index.php" ]; then
-        wp-cli core download
-    fi
-
+    echo "Creating wp-config.php..."
     wp-cli config create \
         --dbname="${DB_NAME}" \
         --dbuser="${DB_USER}" \
         --dbpass="${MYSQL_PASSWORD}" \
         --dbhost="${MYSQL_HOST}"
+fi
 
+# Install WordPress in MariaDB if not already installed
+if ! wp-cli core is-installed; then
+    echo "Installing WordPress..."
     wp-cli core install \
         --url="${WP_URL}" \
         --title="${WP_TITLE}" \
@@ -51,21 +56,21 @@ if [ ! -f "$WEB_ROOT/wp-config.php" ]; then
         --admin_password="${WP_ADMIN_PASSWORD}" \
         --admin_email="${WP_ADMIN_EMAIL}"
 
+    echo "Creating regular user..."
     wp-cli user create \
         "${WP_USER}" \
         "${WP_USER_EMAIL}" \
         --role=author \
         --user_pass="${WP_USER_PASSWORD}"
     
-    # configure  worpress  to use redis cache
+    # Configure WordPress to use Redis cache
     wp-cli config set WP_REDIS_HOST "redis"
     wp-cli config set WP_REDIS_PORT "6379"
     wp-cli plugin install redis-cache --activate
     wp-cli redis enable
-    echo "redis cache  enabled successfully"
-
-
-    chown -R www-data:www-data "${WEB_ROOT}"
+    echo "Redis cache enabled successfully."
 fi
+
+chown -R www-data:www-data "${WEB_ROOT}"
 
 exec php-fpm8.2 -F
