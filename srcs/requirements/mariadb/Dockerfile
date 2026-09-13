@@ -15,4 +15,3 @@ RUN chmod +x /usr/local/bin/db-initializer.sh
 EXPOSE 3306
 
 ENTRYPOINT ["/usr/local/bin/db-initializer.sh"]
-

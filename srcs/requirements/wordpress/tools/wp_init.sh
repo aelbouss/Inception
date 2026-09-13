@@ -63,6 +63,9 @@ if ! wp-cli core is-installed; then
         --role=author \
         --user_pass="${WP_USER_PASSWORD}"
     
+    # enable  wordpress to  use its internal routing to handle 404 errors
+    wp-cli rewrite structure '/%postname%/'
+    
     # Configure WordPress to use Redis cache
     wp-cli config set WP_REDIS_HOST "redis"
     wp-cli config set WP_REDIS_PORT "6379"
