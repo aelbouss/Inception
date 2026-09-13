@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anass Alboussaili - DevOps & Systems Engineering</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --border: #334155;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.2rem;
+            color: var(--text-main);
+        }
+        .title {
+            color: var(--accent);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .contact-info {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .contact-info a {
+            color: var(--accent);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        h2 {
+            font-size: 1.25rem;
+            margin-top: 0;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+        ul {
+            padding-left: 1.25rem;
+            margin: 0.5rem 0;
+        }
+        li {
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+        li strong, .project-item h3 {
+            color: var(--text-main);
+        }
+        .project-item {
+            margin-bottom: 1.25rem;
+        }
+        .project-item:last-child {
+            margin-bottom: 0;
+        }
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 0.25rem;
+        }
+        .project-title {
+            font-weight: bold;
+            color: var(--text-main);
+        }
+        .project-tech {
+            font-size: 0.85rem;
+            color: var(--accent);
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+        .skill-category h3 {
+            font-size: 0.95rem;
+            margin: 0 0 0.25rem 0;
+            color: var(--text-main);
+        }
+        .skill-category p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Anass Alboussaili</h1>
+            <div class="title">Software Engineering Student & DevOps Enthusiast</div>
+            <div class="contact-info">
+                Morocco | 
+                <a href="mailto:elboussailianass37@gmail.com">Email</a> | 
+                <a href="https://linkedin.com/in/anass-elboussaili" target="_blank">LinkedIn</a> | 
+                <a href="https://github.com/aelbouss" target="_blank">GitHub</a>
+            </div>
+        </header>
+
+        <section>
+            <h2>Summary</h2>
+            <p>Software Engineering student at 1337 (42 Network) specializing in DevOps, cloud automation, and systems architecture. Combines a solid low-level foundation (C/C++, POSIX threads, socket programming) with modern infrastructure practices like containerization and microservice orchestration[cite: 1].</p>
+        </section>
+
+        <section>
+            <h2>Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>CI/CD & Automation</h3>
+                    <p>GitLab CI, GitHub Actions, Automation Scripts, Artifact Management[cite: 1]</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Containerization</h3>
+                    <p>Docker, Docker Compose, Multi-stage Builds, Custom Orchestration[cite: 1]</p>
+                </div>
+                <div class="skill-category">
+                    <h3>System Admin</h3>
+                    <p>Linux (Ubuntu, Debian), Bash Scripting, Permissions, SSL/TLS[cite: 1]</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Networking & Web</h3>
+                    <p>TCP/IP, Sockets, I/O Multiplexing (poll/select), HTTP/1.1[cite: 1]</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Core Languages</h3>
+                    <p>C, C++ (C++98), Shell (Bash), SQL[cite: 1]</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Key Projects</h2>
+            
+            <div class="project-item">
+                <div class="project-header">
+                    <span class="project-title">Inception (System Administration & Virtualization)</span>
+                    <span class="project-tech">Docker, Nginx, Debian</span>
+                </div>
+                <ul>
+                    <li>Architected a multi-container private infrastructure built entirely from scratch using self-designed Dockerfiles based on Debian Linux[cite: 1].</li>
+                    <li>Configured a secure Nginx entry point handling encrypted transport layer security via custom generated SSL/TLS certificates[cite: 1].</li>
+                </ul>
+            </div>
+
+            <div class="project-item">
+                <div class="project-header">
+                    <span class="project-title">Custom HTTP Web Server (Webserv)</span>
+                    <span class="project-tech">C++, Sockets, I/O Multiplexing</span>
+                </div>
+                <ul>
+                    <li>Developed an Nginx-inspired concurrent HTTP/1.1 web server from scratch adhering to strict C++98 guidelines[cite: 1].</li>
+                    <li>Engineered a non-blocking I/O runtime engine using 'poll()' to safely multiplex incoming TCP connections[cite: 1].</li>
+                </ul>
+            </div>
+
+            <div class="project-item">
+                <div class="project-header">
+                    <span class="project-title">Multi-Stage Software Factory & CI/CD Pipeline</span>
+                    <span class="project-tech">GitLab CI, Docker, Bash</span>
+                </div>
+                <ul>
+                    <li>Designed a continuous delivery pipeline handling static code profiling, compilation checks, and artifact building[cite: 1].</li>
+                    <li>Engineered localized multi-stage Docker deployment configurations resulting in a 75% image size minimization[cite: 1].</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Education</h2>
+            <div class="project-item">
+                <div class="project-header">
+                    <span class="project-title">1337 Coding School (42 Network)</span>
+                    <span class="project-tech">Oct 2024 - Present</span>
+                </div>
+                <p style="margin: 0.2rem 0 0 0; color: var(--text-muted); font-size: 0.9rem;">Software Engineering Curriculum — Ben Guerir, Morocco[cite: 1]</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

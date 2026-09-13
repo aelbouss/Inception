@@ -21,6 +21,11 @@ EXPOSE 443
 
 COPY conf/nginx.conf  /etc/nginx/nginx.conf
 
+
+# copy  the  static  website  file  to  nginx container 
+
+COPY static-site/index.html /var/www/html/index.html
+
 # copy the  script that creates  the certificate
 
 COPY tools/nginx_certif.sh /entrypoint.sh
