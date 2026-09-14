@@ -2,7 +2,18 @@ version: '3.8'
 
 services:
 
-  
+  portainer:
+    image: portainer
+    container_name: portainer
+    build: requirements/bonus/portainer/
+    restart: always
+    ports:
+      - "9000:9000"
+    networks:
+      - inception
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
   adminer:
     image : adminer
     container_name : adminer
@@ -131,6 +142,12 @@ volumes:
       type: none
       o: bind
       device: /home/${USER}/data/wordpress
+  portainer_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/portainer
 
 secrets:
   db_root_password:

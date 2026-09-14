@@ -47,6 +47,7 @@ All services run inside dedicated, custom-built containers based on **Debian Boo
 | **Adminer** | Debian Bookworm | `8080` (Host) | Web-based database management interface (Bonus) |
 | **FTP** | Debian Bookworm | `21`, `30000-30009` | File Transfer Protocol server targeting WordPress volume (Bonus) |
 | **Static Site** | Debian Bookworm | None (`8080` internal) | Dedicated Python 3 HTTP server hosting static resume page (Bonus) |
+| **Portainer** | Debian Bookworm | `9000` (Host) | Web-based container and volume management dashboard (Bonus) |
 
 ---
 
