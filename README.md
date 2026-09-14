@@ -46,6 +46,7 @@ All services run inside dedicated, custom-built containers based on **Debian Boo
 | **Redis** | Debian Bookworm | None (`6379` internal) | In-memory object caching for WordPress queries (Bonus) |
 | **Adminer** | Debian Bookworm | `8080` (Host) | Web-based database management interface (Bonus) |
 | **FTP** | Debian Bookworm | `21`, `30000-30009` | File Transfer Protocol server targeting WordPress volume (Bonus) |
+| **Static Site** | Debian Bookworm | None (`8080` internal) | Dedicated Python 3 HTTP server hosting static resume page (Bonus) |
 
 ---
 
@@ -136,7 +137,14 @@ echo "Hello 42" > test.txt
 curl -s -u ramon:waaa@ftp@hhh -T test.txt ftp://127.0.0.1/
 ```
 
-### 5. Data Persistence Test
+### 5. Validating Static Website Service
+Test accessing the isolated static resume site through the NGINX TLS reverse proxy:
+```bash
+# Verify the static site is served over HTTPS
+curl -k -s https://aelbouss.42.fr/resume/ | grep -i "Anass Alboussaili"
+```
+
+### 6. Data Persistence Test
 1. Log in to WordPress admin, publish a test post or comment.
 2. Run `make down` to stop all containers.
 3. Run `make up` to restart.
